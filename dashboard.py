@@ -3,8 +3,8 @@ import pandas as pd
 
 st.title("Dashboard Bike Sharing Dataset")
 
-url_day = 'https://github.com/nicholasdoloksaribu/bike-sharing-dashboard/blob/main/data/day.csv';
-url_hour = 'https://github.com/nicholasdoloksaribu/bike-sharing-dashboard/blob/main/data/hour.csv'
+url_day = 'https://raw.githubusercontent.com/nicholasdoloksaribu/bike-sharing-dashboard/refs/heads/main/data/day.csv';
+url_hour = 'https://raw.githubusercontent.com/nicholasdoloksaribu/bike-sharing-dashboard/refs/heads/main/data/hour.csv'
 
 # Load dataset
 day_df = pd.read_csv( url_day)
