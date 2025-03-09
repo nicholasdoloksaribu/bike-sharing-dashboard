@@ -8,7 +8,7 @@ day_df = pd.read_csv("https://raw.githubusercontent.com/nicholasdoloksaribu/bike
 hour_df = pd.read_csv("https://raw.githubusercontent.com/nicholasdoloksaribu/bike-sharing-dashboard/refs/heads/main/data/hour.csv")
 
 # Mapping kondisi cuaca
-weather_mapping = {1: "Cerah", 2: "Mendung", 3: "Hujan", 4: "Badai"}
+weather_mapping = {1: "Cerah", 2: "Mendung", 3: "Hujan"}
 day_df["weathersit"] = day_df["weathersit"].map(weather_mapping).fillna("Tidak Diketahui")
 hour_df["weathersit"] = hour_df["weathersit"].map(weather_mapping).fillna("Tidak Diketahui")
 
