@@ -29,7 +29,7 @@ st.sidebar.title("Filter Data")
 analysis_type = st.sidebar.radio("Pilih Jenis Analisis:", ["Cuaca", "Jam"])
 
 if analysis_type == "Cuaca":
-    weather_options = ["Semua Cuaca"] + list(day_df["weather_label"].unique())
+    weather_options = ["Semua Cuaca"] + sorted(day_df["weather_label"].unique(), key=lambda x: ['Cerah', 'Mendung', 'Hujan'].index(x))
     selected_weathersit = st.sidebar.selectbox("Pilih Kondisi Cuaca:", weather_options)
 
     if selected_weathersit == "Semua Cuaca":
@@ -56,13 +56,20 @@ st.metric("Total Penyewaan Sepeda (Sesuai Filter)", filtered_day_df["cnt"].sum()
 
 # === Analisis Berdasarkan Pilihan ===
 if analysis_type == "Cuaca":
-    st.subheader("Pengaruh Cuaca terhadap Penyewaan Sepeda")
+    st.subheader(f"Pengaruh Cuaca terhadap Penyewaan Sepeda ({selected_weathersit})")
+
+    if selected_weathersit == "Semua Cuaca":
+        cuaca_grouped = day_df.groupby("weather_label")["cnt"].mean().reset_index()
+        order_cuaca = ["Cerah", "Mendung", "Hujan"]
+    else:
+        cuaca_grouped = filtered_day_df.groupby("weather_label")["cnt"].mean().reset_index()
+        order_cuaca = [selected_weathersit]
     
     # Perbaikan agar cnt konsisten
     cuaca_grouped = day_df.groupby("weather_label")["cnt"].mean().reset_index()
 
     fig, ax = plt.subplots(figsize=(8, 5))
-    sns.barplot(x="weather_label", y="cnt", data=cuaca_grouped, ax=ax, order=["Cerah", "Mendung", "Hujan"])
+    sns.barplot(x="weather_label", y="cnt", data=cuaca_grouped, ax=ax, order=order_cuaca)
     plt.title("Pengaruh Cuaca terhadap Jumlah Penyewaan Sepeda")
     plt.xlabel("Kondisi Cuaca")
     plt.ylabel("Jumlah Sepeda Disewa")
